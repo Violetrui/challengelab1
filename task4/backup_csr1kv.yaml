@@ -1,0 +1,17 @@
+---
+- name: AUTOMATIC BACKUP OF Interfaces and Version
+  hosts: CSR1kv
+  gather_facts: false
+  connection: local
+ 
+  tasks:
+   - name: DISPLAYING THE Interfaces
+     ios_command:
+       commands:
+         - show ip interface brief
+     register: output
+ 
+   - name: SAVE OUTPUT TO ./TASK4/
+     copy:
+       content: "{{ output.stdout[0] }}"
+       dest: "TASK4/show_run_{{ inventory_hostname }}.txt"
